@@ -40,6 +40,7 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<Member> createMember(@RequestBody Member member) {
+        
         Member createdMember = memberService.createMember(member);
         return new ResponseEntity<>(createdMember, HttpStatus.CREATED);
     }

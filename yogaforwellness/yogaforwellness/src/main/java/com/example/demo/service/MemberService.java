@@ -2,13 +2,14 @@
 
 package com.example.demo.service;
 
-import com.example.demo.model.Member;
-import com.example.demo.repository.MemberRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.demo.model.Member;
+import com.example.demo.repository.MemberRepository;
 
 @Service
 public class MemberService {
@@ -25,6 +26,7 @@ public class MemberService {
     }
 
     public Member createMember(Member member) {
+       // System.out.println(member.getMemberAuth().getUsername());
         return memberRepository.save(member);
     }
 

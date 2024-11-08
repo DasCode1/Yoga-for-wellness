@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,6 +41,11 @@ public class Member {
 
     @OneToMany(cascade=CascadeType.ALL)
     private List<HealthIssue> healthIssue;
+
+
+    @OneToOne(cascade=CascadeType.ALL)
+    private MemberAuth memberAuth;
+    
     
 
 
@@ -76,13 +82,7 @@ public class Member {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-     public List<CourseType> getCourseType() {
-        return course;
-    }
 
-    public void setCourseType(List<CourseType> course) {
-        this.course = course;
-    }
       public Gender getGender() {
         return gender;
     }
@@ -115,16 +115,7 @@ public class Member {
         this.timing = timing;
     }
 
-    public String getOtherTiming(){
-        return othertiming;
-    }
-    public void setOtherTiming(String othertiming){
-        if(this.timing ==Timing.OTHER){
-        this.othertiming=othertiming;
-        }else{
-            this.othertiming=null;
-        }
-    }
+    
      // Getter for scheduleDetails
     public ScheduleDetails getScheduleDetails() {
         return scheduleDetails;
@@ -141,5 +132,33 @@ public class Member {
 
     public void setHealthIssue(List<HealthIssue> healthIssue) {
         this.healthIssue = healthIssue;
+    }
+
+    public MemberAuth getMemberAuth() {
+        return memberAuth;
+    }
+
+    public void setMemberAuth(MemberAuth memberAuth) {
+        this.memberAuth = memberAuth;
+    }
+
+    public List<CourseType> getCourse() {
+        return course;
+    }
+
+    public void setCourse(List<CourseType> course) {
+        this.course = course;
+    }
+
+    public String getOthertiming() {
+        return othertiming;
+    }
+
+    public void setOthertiming(String othertiming) {
+        if(this.timing ==Timing.OTHER){
+            this.othertiming=othertiming;
+            }else{
+                this.othertiming=null;
+            }
     }
 }

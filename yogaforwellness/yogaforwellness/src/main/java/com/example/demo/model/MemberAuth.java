@@ -10,11 +10,22 @@ import jakarta.persistence.Id;
 @Entity
 public class MemberAuth {
 
-    public MemberAuth(String username, String password) {
-        this.username = username;
-        setPassword(password); // In practice, hash this password
+    public MemberAuth(){
+        
     }
-        @Id
+
+    public MemberAuth(String username, String password) {
+        this.username = setUserName(username);
+                setPassword(password); // In practice, hash this password
+            }
+
+            private String generateUserName(String username) {
+                   String[] components=username.split("_");
+                   String element1 = components[0].substring(0,4);
+                   String element2 = components[1].substring(0,4);
+                   return element1.concat(element2);
+            }
+                @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,7 +34,16 @@ public class MemberAuth {
     private String username;
     private String password; // In
     private byte[] encodedPassword;
+
+
+    private Long memberId;
   
+    public Long getMemberId(){
+        return memberId;
+    }
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
     public Long getId() {
         return id;
     }
@@ -32,11 +52,7 @@ public class MemberAuth {
         this.id = id;
     }
 
-    // Method to authenticate the user
-    public boolean authenticate(String inputUsername, String inputPassword) {
-        return this.username.equals(inputUsername) && this.password.equals(inputPassword);
-    }
-
+ 
     // Getters
     public String getUsername() {
         return username;
@@ -48,12 +64,8 @@ public class MemberAuth {
     }
 
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public void setPassword(String password) {
-        this.password = password;
         setEncodedPassword(password);
     }
 
@@ -63,6 +75,11 @@ public class MemberAuth {
         
         this.encodedPassword = encodedPassword;
     }
+
+    private String setUserName(String username) {
+            return generateUserName(username);
+    }
+
 
 
 

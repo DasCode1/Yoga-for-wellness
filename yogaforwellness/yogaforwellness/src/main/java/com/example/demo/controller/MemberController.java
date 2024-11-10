@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Member;
+import com.example.demo.service.Exception.PasswordMisMatchException;
+import com.example.demo.service.Exception.UserNameNotFoundException;
 import com.example.demo.service.MemberService;
+
 
 @RestController
 @RequestMapping("/api/members")
@@ -50,6 +54,22 @@ public class MemberController {
         Member updatedMember = memberService.updateMember(id, memberDetails);
         return ResponseEntity.ok(updatedMember);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestParam("username") String userName,@RequestParam("password") String password) {
+        String token =  "";
+        try{
+         token=memberService.login(userName,password);
+        }catch(UserNameNotFoundException e){
+            System.out.println("UserName misMatch");
+        }catch(PasswordMisMatchException e){
+            System.out.println("password misMatch");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return token;
+    }
+    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
